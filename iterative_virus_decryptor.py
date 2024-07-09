@@ -71,7 +71,7 @@ def main():
     ]
     funct_start_real_addr = "0x14001C7E4"
     data_size = 408
-    filename = r"/home/kaixeb/repos/Python/iterative_virus.exe"
+    filename = r"/home/kaixeb/repos/Python/HTBIterativeVirus/iterative_virus.exe"
     pe = pefile.PE(filename)
     data_encoded_extracted, sect_address, file_image_base = extract_data(pe)
     data_seg_rva_addr = hex(sect_address)
@@ -101,6 +101,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-#address of the flag 00000001400014BF and flag: HTB{f1V3_it3RaTiOn_V1rus}
