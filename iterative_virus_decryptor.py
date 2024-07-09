@@ -2,7 +2,7 @@ import binascii
 import pefile
 
 
-# extract data from .ivir section from file
+# extract data from .ivir section from PE
 def extract_data(pe):
     for section in pe.sections:
         if ".ivir" in section.Name.decode(encoding="utf-8").rstrip("x00"):
@@ -69,14 +69,14 @@ def main():
         0xCB8FF2D53D7505A1,
         0x0F1EF554206DCE4D,
     ]
-    func_start_real_addr = "0x14001C7E4"
+    enc_data_start_real_addr = "0x14001C7E4"
     data_size = 408
     filename = r"/home/kaixeb/repos/Python/HTBIterativeVirus/iterative_virus.exe"
     pe = pefile.PE(filename)
     data_encoded_extracted, sect_address, file_image_base = extract_data(pe)
     data_seg_rva_addr = hex(sect_address)
     data_seg_real_addr = hex(int(data_seg_rva_addr, 16) + int(file_image_base, 16))
-    data_offset = calc_offset(func_start_real_addr, data_seg_real_addr)
+    data_offset = calc_offset(enc_data_start_real_addr, data_seg_real_addr)
     encrypted_data = data_encoded_extracted[data_offset : data_offset + data_size]
 
     # convert all encrypted bytes into LE array of decimals
